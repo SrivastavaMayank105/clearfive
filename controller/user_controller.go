@@ -17,7 +17,7 @@ func GetUserDetails(ctx *gin.Context){
 		return
 	}
 
-	if request.Age <0 {
+	if request.Age <18 {
 		err:=fmt.Errorf("invalid age")
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError,err.Error())
 		return
