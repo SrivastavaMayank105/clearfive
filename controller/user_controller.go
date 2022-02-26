@@ -12,7 +12,7 @@ func GetUserDetails(ctx *gin.Context){
 	var request mapper.DataRequest
 
 	err:=ctx.ShouldBindJSON(&request);if err !=nil{
-		bindErr :=fmt.Errorf("Bad requedt")
+		bindErr :=fmt.Errorf("Bad request")
 		ctx.AbortWithStatusJSON(http.StatusBadRequest,bindErr.Error())
 		return
 	}
@@ -20,12 +20,14 @@ func GetUserDetails(ctx *gin.Context){
 	if request.Age <0 {
 		err:=fmt.Errorf("invalid age")
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError,err.Error())
+		return
 	}
 	
 	mob:=strconv.Itoa(request.MobileNuber)
 	if len(mob) !=10 || string(mob[0])=="0"{
 		err:=fmt.Errorf("invalid mobile number")
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError,err.Error())
+		return
 	}
 
 	userProfileRes:=service.NewUserProfileService()
